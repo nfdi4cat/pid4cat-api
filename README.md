@@ -14,6 +14,29 @@ For more on pid4cat see
 
 If you observe any problem or have questions or suggestion, please create an issue in the [pid4cat-repository](https://github.com/nfdi4cat/pid4cat-model/issues/new?labels=gateway-API) using the label *gateway-API*.
 
+## Development
+
+This repository uses [pre-commit](https://pre-commit.com/) to check for spelling errors and for syntax checks.
+
+To install make sure that you have either [pipx](https://pipx.pypa.io/stable/) or [uv](https://docs.astral.sh/uv/getting-started/installation/) installed. Then install pre-commit by executing
+
+```bash
+pipx install pre-commit
+```
+
+or
+
+```bash
+uv tool install pre-commit
+```
+
+After installation, the checks will run on each commit.
+You may also run the checks manually with
+
+```bash
+pre-commit run --all
+```
+
 ## Contributors
 
 Main developer:
