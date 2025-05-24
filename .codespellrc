@@ -1,0 +1,7 @@
+# https://github.com/codespell-project/codespell
+
+[codespell]
+skip = *.po, .codespellrc, _typos.toml
+# Reminder: words have to be lowercased for the ignore-words-list
+ignore-words-list = "linke"
+quiet-level = 3

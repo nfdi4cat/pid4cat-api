@@ -1,0 +1,4 @@
+# Ref.: https://github.com/crate-ci/typos (spell checker)
+
+[default.extend-words]
+linke = "linke"
