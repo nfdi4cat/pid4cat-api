@@ -41,7 +41,7 @@ pre-commit run --all
 
 Main developer:
 
-- Preston Rodriguez (ORCID: [0000-0002-0377-5018](https://orcid.org/0000-0002-0377-5018)), GitHub [@prestonrodrigues](https://github.com/prestonrodrigues) (implementation of handle API gateway server, operation of handle server)
+- Preston Rodrigues (ORCID: [0000-0002-0377-5018](https://orcid.org/0000-0002-0377-5018)), GitHub [@prestonrodrigues](https://github.com/prestonrodrigues) (implementation of handle API gateway server, operation of handle server)
 
 Contributors (see also [GitHub contributors](https://github.com/nfdi4cat/pid4cat-api/graphs/contributors)):
 
