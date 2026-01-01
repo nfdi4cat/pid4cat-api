@@ -1,0 +1,350 @@
+openapi: 3.0.3
+info:
+  version: "3.0.0"
+  title: "PID Service For NFDI4😺 "
+  description: "A short API documentation to describes some of the endpoints for the Handle PID Server at HLRS"
+  contact:
+    name: "Preston Rodrigues"
+    email: "preston.rodrigues@hlrs.de"
+    url: ""
+  license:
+    name: "MIT"
+    url: "http://opensource.org/licenses/MIT"
+
+
+servers:
+  - url: https://{region}/testpid/v3/4cat
+    variables:
+       region:
+         default: api.nfdi4cat.org
+         enum:
+           - api.nfdi4cat.org
+#servers:
+#  - url: http://localhost:8080/nfdipid/v1/4cat
+#  - url: https://api.nfdi4cat.org/testpid/v1/4cat
+#  - url: http://localhost:8080/nfdipid/v2/4cat
+#  - url: http://localhost:8080/pid4cat/v3/4cat
+#  - url: https://api.nfdi4cat.org/testpid/v2/4cat
+#  - url: http://localhost:8080/nfdipid/v21/4cat
+
+
+security:
+  - basicAuth:
+
+paths:
+  /:
+    get:
+      security:
+        - BasicAuth: []
+      tags:
+        - "NFDI4Cat"
+      description: "Get all the available options"
+      operationId: "showBase"
+      produces:
+        - "application/json"
+      parameters: []
+      responses:
+        401:
+          $ref: "#/components/responses/Unauthorised"
+        403:
+          $ref: "#/components/responses/Forbidden"
+        404:
+          $ref: "#/components/responses/Notfound"
+        200:
+          $ref: "#/components/responses/Success"
+
+
+  /{nfdi4cat_scheme}:
+    get:
+      security:
+        - BasicAuth: []
+      tags:
+        - "NFDI4Cat Scheme"
+      description: "Get all the available nfdi4cat_schemes"
+      operationId: "getSchemeResources"
+      produces:
+        - "application/json"
+      parameters:
+        - in: path
+          name: nfdi4cat_scheme
+          schema:
+            type: string
+            enum: [device, sample, ontology, chemical, organism]
+          required: true
+      responses:
+        401:
+          $ref: "#/components/responses/Unauthorised"
+        403:
+          $ref: "#/components/responses/Forbidden"
+        404:
+          $ref: "#/components/responses/Notfound"
+        200:
+          $ref: "#/components/responses/SuccessD"
+
+
+
+  /{nfdi4cat_scheme}/{get_id}:
+    get:
+      security:
+        - BasicAuth: []
+      tags:
+        - "NFDI4Cat Scheme"
+      description: "Get nfdi4cat_scheme with ID from your Institute"
+      operationId: "getSchemeWithResourceID"
+      produces:
+        - "application/json"
+      parameters:
+        - in: path
+          name: nfdi4cat_scheme
+          schema:
+            type: string
+            enum: [device, sample, ontology, chemical, organism]
+          required: true
+        - in: path
+          name: get_id
+          schema:
+            type: string
+          required: true
+          description: "ID of a registered nfdi4cat_scheme"
+      responses:
+        401:
+          $ref: "#/components/responses/Unauthorised"
+        403:
+          $ref: "#/components/responses/Forbidden"
+        404:
+         $ref: "#/components/responses/Notfound"
+        200:
+          $ref: "#/components/responses/SuccessDG"
+
+  /{nfdi4cat_scheme}/{id}:
+    put:
+      security:
+        - BasicAuth: []
+      tags:
+        - "NFDI4Cat Scheme"
+      description: "Update nfdi4cat_scheme with ID from your Institute"
+      operationId: "updateSchemeWithResourceID"
+      produces:
+        - "application/json"
+      parameters:
+        - in: path
+          name: nfdi4cat_scheme
+          schema:
+            type: string
+            enum: [device, sample, ontology, chemical, organism]
+          required: true
+        - in: path
+          name: id
+          schema:
+            type: string
+          required: true
+          description: "ID of a registered nfdi4cat_scheme"
+        - in: query
+          name: hide
+          schema:
+            type: boolean
+          required: true
+          description: "Data visiblitiy status"
+        - in: query
+          name: data
+          schema:
+            type: string
+          required: true
+          description: "Location of your Data"
+
+      responses:
+        401:
+          $ref: "#/components/responses/Unauthorised"
+        403:
+          $ref: "#/components/responses/Forbidden"
+        200:
+          $ref: "#/components/responses/SuccessDU"
+
+
+  /{nfdi4cat_scheme}/{id}/metadata/{type}:
+    get:
+      security:
+        - BasicAuth: []
+      tags:
+        - "NFDI4Cat Scheme Metadata"
+      description: "Get metadata nfdi4cat_scheme with ID from your Institute"
+      operationId: "getSchemeMetadataForResourceID"
+      produces:
+        - "application/json"
+      parameters:
+        - in: path
+          name: nfdi4cat_scheme
+          schema:
+            type: string
+            enum: [device, sample, ontology, chemical, organism]
+          required: true
+        - in: path
+          name: id
+          schema:
+            type: string
+          required: true
+          description: "ID of a registered nfdi4cat_scheme"
+        - in: path
+          name: type
+          schema:
+            type: string
+            enum: [ email, status, schema_ver, metadata_license ,resource, related, changes]
+          required: true
+          description: "Metadata Type"
+      responses:
+        401:
+          $ref: "#/components/responses/Unauthorised"
+        403:
+          $ref: "#/components/responses/Forbidden"
+        404:
+          $ref: "#/components/responses/Notfound"
+        200:
+          $ref: "#/components/responses/SuccessDG"
+
+
+
+  /{nfdi4cat_scheme}/{id}/metadata/{type}/:
+    put:
+      security:
+        - BasicAuth: []
+      tags:
+        - "NFDI4Cat Scheme Metadata"
+      description: "Add metadata for nfdi4cat_scheme with ID from your Institute"
+      operationId: "addMainSchemeMetadataForResourceID"
+      consumes:
+        - "application/json"
+        - "text/plain"
+      produces:
+        - "application/json"
+      parameters:
+        - in: path
+          name: nfdi4cat_scheme
+          schema:
+            type: string
+            enum: [device, sample, ontology, chemical, organism]
+          required: true
+        - in: path
+          name: id
+          schema:
+            type: string
+          required: true
+          description: "ID of a registered nfdi4cat_scheme"
+        - in: path
+          name: type
+          schema:
+            type: string
+            enum: [ email, status, schema_ver, metadata_license ,resource, related, changes]
+            summary: "testing"
+          required: true
+          description: "Metadata Type "
+        - in: query
+          name: hide
+          schema:
+            type: boolean
+          required: true
+          description: "Metadata visiblitiy status"
+      requestBody:
+        required: true
+        content:
+          text/plain:
+            scheme:
+              type: string
+            examples:
+              email:
+                summary: 'abc@xzy.com'
+                value: 'dsdd'
+              status:
+                 summary: 'registered'
+                 value: 'dsdfsdssfs'
+          application/json:
+            schema:
+              type: object
+              properties:
+                # 'file' will be the field name in this multipart request
+                json_file:
+                  type: string
+                  format: base64
+              required: json_file
+      responses:
+        400:
+          $ref: "#/components/responses/Bad_Request"
+        401:
+          $ref: "#/components/responses/Unauthorised"
+        403:
+          $ref: "#/components/responses/Forbidden"
+        200:
+          $ref: "#/components/responses/SuccessDG"
+
+components:
+  securitySchemes:
+    BasicAuth:
+      type: http
+      scheme: basic
+  responses:
+    SuccessD:
+      description: "Successful Operation : List all available handles of the Scheme for your Institute"
+      schema:
+        $ref:  "#/components/schemas/Success"
+
+    SuccessDC:
+      description: "Successful Operation : Create Handle for Scheme with New ID for your Institute"
+      schema:
+        $ref:  "#/components/schemas/Success"
+    SuccessDG:
+      description: "Successful Operation : Get handle for the Scheme with ID for your Institute"
+      schema:
+        $ref:  "#/components/schemas/Success"
+
+    SuccessDU:
+      description: "Successful Operation : Update handle for the Scheme with ID for your Institute"
+      schema:
+        $ref:  "#/components/schemas/Success"
+
+    Success:
+      description: "Successful Operation : Supported handles for your Institute."
+      schema:
+        $ref:  "#/components/schemas/Success"
+    Notfound:
+      description: Not Found
+      schema:
+        $ref: "#/components/schemas/Notfound"
+    Unauthorised:
+      description: Unauthorised
+      schema:
+        $ref: "#/components/schemas/Error"
+    Forbidden:
+      description: Forbidden
+      schema:
+        $ref: "#/components/schemas/Error"
+    Bad_Request:
+       description: Bad Request
+       schema:
+         $ref: "#/components/schemas/Error"
+
+
+  schemas:
+    Success:
+      type: object
+      properties:
+        instituteName:
+          properties:
+            schemeName:
+               type: array
+
+    Notfound:
+      type: object
+      properties:
+        instituteName:
+          properties:
+            Error:
+              type: string
+
+    Error:
+     type: object
+     properties:
+       Error:
+        type: string
+
+    pid4CatModel:
+      type: object
+      description: "For Additional Information -- <a href='https://nfdi4cat.github.io/pid4cat-model/latest/'>Click Here </a>"
